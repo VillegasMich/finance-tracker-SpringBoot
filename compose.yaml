@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - "POSTGRES_DB=finance-tracker"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_USER=root"
+    ports:
+      - "5432"
