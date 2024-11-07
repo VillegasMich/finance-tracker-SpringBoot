@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Expense {
@@ -19,13 +21,18 @@ public class Expense {
   private Long id;
   private String description;
   private Double amount;
-  private Date date;
+  private LocalDateTime date;
   private String category;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   @JsonBackReference
   private User user;
+
+  @PrePersist
+  protected void onCreate() {
+    this.date = LocalDateTime.now();
+  }
 
   public User getUser() {
     return user;
@@ -59,11 +66,11 @@ public class Expense {
     this.amount = amount;
   }
 
-  public Date getDate() {
+  public LocalDateTime getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDateTime date) {
     this.date = date;
   }
 

@@ -43,7 +43,21 @@ public class UserService {
     return userRepository.findByUsername(username);
   }
 
+  public Optional<User> findByCredentials(String usernameOrEmail, String password) {
+    return userRepository
+        .findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+        .filter(user -> passwordEncoder.matches(password, user.getPassword()));
+  }
+
   public List<User> getAllUsers() {
     return userRepository.findAll();
+  }
+
+  public Optional<User> findById(Long id) {
+    return userRepository.findById(id);
+  }
+
+  public void deleteById(Long id) {
+    userRepository.deleteById(id);
   }
 }

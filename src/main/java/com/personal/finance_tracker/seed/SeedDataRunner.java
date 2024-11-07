@@ -2,6 +2,7 @@
 package com.personal.finance_tracker.seed;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +21,14 @@ public class SeedDataRunner implements CommandLineRunner {
   private final UserRepo userRepo;
   private final IncomeRepo incomeRepo;
   private final ExpenseRepo expenseRepo;
+  private final PasswordEncoder passwordEncoder;
 
   public SeedDataRunner(UserRepo userRepository, IncomeRepo incomeRepository,
-      ExpenseRepo expenseRepository) {
+      ExpenseRepo expenseRepository, PasswordEncoder passwordEncoder) {
     this.userRepo = userRepository;
     this.incomeRepo = incomeRepository;
     this.expenseRepo = expenseRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -37,36 +40,18 @@ public class SeedDataRunner implements CommandLineRunner {
       incomeRepo.deleteAllInBatch();
       userRepo.deleteAllInBatch();
 
-      // Create 3 users and their related incomes and expenses
-      User user1 = createUser("john_doe", "john.doe@example.com", "password123");
-      // userRepo.save(user1);
-
-      Income income1 = createIncome(3000.0, "Salary", user1);
-      Income income2 = createIncome(500.0, "Freelance", user1);
-      Expense expense1 = createExpense(1200.0, "Rent", user1);
-      Expense expense2 = createExpense(200.0, "Utilities", user1);
-
-      user1.setIncome(Arrays.asList(income1, income2));
-      user1.setExpense(Arrays.asList(expense1, expense2));
-
-      userRepo.save(user1); // This will cascade save the incomes and expenses
-
-      // Repeat for other users
-      User user2 = createUser("jane_smith", "jane.smith@example.com", "password456");
-      // userRepo.save(user2);
-      Income income3 = createIncome(4000.0, "Main Job", user2);
-      Expense expense3 = createExpense(1500.0, "Mortgage", user2);
-      user2.setIncome(Arrays.asList(income3));
-      user2.setExpense(Arrays.asList(expense3));
-      userRepo.save(user2);
-
-      User user3 = createUser("mark_taylor", "mark.taylor@example.com", "password789");
-      // userRepo.save(user3);
-      Income income4 = createIncome(2500.0, "Part-Time Job", user3);
-      Expense expense4 = createExpense(800.0, "Car Loan", user3);
-      user3.setIncome(Arrays.asList(income4));
-      user3.setExpense(Arrays.asList(expense4));
-      userRepo.save(user3);
+      // Create seed data for User, Income, and Expense
+      for (int i = 0; i < 10; i++) {
+        String username = "user" + i;
+        String email = username + "@example.com";
+        String password = "password";
+        User user = createUser(username, email, password);
+        Income income = createIncome(2500.0, "Part-Time Job", user);
+        Expense expense = createExpense(1500.0, "Mortgage", user);
+        user.setIncome(Arrays.asList(income));
+        user.setExpense(Arrays.asList(expense));
+        userRepo.save(user);
+      }
 
       System.out.println("Seed data initialized.");
     } catch (Exception e) {
@@ -80,7 +65,7 @@ public class SeedDataRunner implements CommandLineRunner {
     User user = new User();
     user.setUsername(username);
     user.setEmail(email);
-    user.setPassword(password);
+    user.setPassword(passwordEncoder.encode(password));
     return user;
   }
 
