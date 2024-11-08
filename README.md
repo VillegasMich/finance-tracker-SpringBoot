@@ -10,7 +10,7 @@ mvn clean package exec:java
 
 ## Database Schema
 
-![database-schema](../util/finance-tracker-shema.png)
+![finance-tracker-shema](https://github.com/user-attachments/assets/78d6ab25-2e65-4e51-8796-13c0539e6545)
 
 ## Endpoints
 
