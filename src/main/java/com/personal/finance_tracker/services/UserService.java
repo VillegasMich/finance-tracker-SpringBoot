@@ -57,6 +57,29 @@ public class UserService {
     return userRepository.findById(id);
   }
 
+  public Optional<Double> getTotal(Long id) {
+    Optional<User> user = findById(id);
+    if (user.isPresent()) {
+      double total = 0.0;
+      if (user.get().getIncome() != null) {
+        List<Income> incomes = user.get().getIncome();
+        for (Income income : incomes) {
+          total += income.getAmount();
+        }
+      }
+      if (user.get().getExpense() != null) {
+        List<Expense> expenses = user.get().getExpense();
+        for (Expense expense : expenses) {
+          total -= expense.getAmount();
+        }
+      }
+      return Optional.of(total);
+    } else {
+      return Optional.empty();
+    }
+
+  }
+
   public void deleteById(Long id) {
     userRepository.deleteById(id);
   }

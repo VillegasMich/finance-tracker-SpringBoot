@@ -29,10 +29,17 @@ public class UserController {
   }
 
   @PostMapping("/find-by-credentials")
-  public ResponseEntity<User> findByCredentials(@RequestBody LoginRequest loginRequest ) {
+  public ResponseEntity<User> findByCredentials(@RequestBody LoginRequest loginRequest) {
     return userService.findByCredentials(loginRequest.getUsernameOrEmail(), loginRequest.getPassword())
         .map(user -> ResponseEntity.status(HttpStatus.OK).body(user))
-        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  @GetMapping("/total/{id}")
+  public ResponseEntity<String> getTotal(@PathVariable Long id) {
+    return userService.getTotal(id)
+        .map(total -> ResponseEntity.status(HttpStatus.OK).body("Your total is: " + total + " $"))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
   @GetMapping("/{id}")
@@ -48,7 +55,6 @@ public class UserController {
         .map(user -> ResponseEntity.ok(user))
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
-
 
   @GetMapping("/get-all")
   public ResponseEntity<Iterable<User>> getAllUsers() {

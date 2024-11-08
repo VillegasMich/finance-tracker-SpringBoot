@@ -21,7 +21,7 @@ public class Income {
   private Long id;
   private String description;
   private Double amount;
-  private LocalDateTime date;
+  private LocalDateTime createdAt;
   private String category;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +31,7 @@ public class Income {
 
   @PrePersist
   protected void onCreate() {
-    this.date = LocalDateTime.now();
+    this.createdAt = LocalDateTime.now();
   }
 
   public User getUser() {
@@ -66,12 +66,12 @@ public class Income {
     this.amount = amount;
   }
 
-  public LocalDateTime getDate() {
-    return date;
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
   }
 
-  public void setDate(LocalDateTime date) {
-    this.date = date;
+  public void setCreatedAt(LocalDateTime date) {
+    this.createdAt = date;
   }
 
   public String getCategory() {

@@ -8,6 +8,10 @@ Run the following command to start the application:
 
 mvn clean package exec:java
 
+## Database Schema
+
+![database-schema](../util/finance-tracker-shema.png)
+
 ## Endpoints
 
 ### Get
@@ -15,6 +19,7 @@ mvn clean package exec:java
 - `/api/users/get-all`: Get all users
 - `/api/users/username/{username}`: Get user by username
 - `/api/users/{id}`: Get user by id
+- `api/users/total/{id}`: Get user total money
 - `/api/incomes/get-all`: Get all incomes _(for production)_
 - `/api/expenses/get-all`: Get all expenses _(for production)_
 
@@ -46,6 +51,7 @@ mvn clean package exec:java
 - [x] Get user by username
 - [x] Update user by id
 - [x] Get user by credentials
+- [x] Get user total money
 - [ ] Get all expenses from user
 - [ ] Get all incomes from user
 - [ ] Update income from user
