@@ -46,8 +46,8 @@ public class SeedDataRunner implements CommandLineRunner {
         String email = username + "@example.com";
         String password = "password";
         User user = createUser(username, email, password);
-        Income income = createIncome(2500.0, "Part-Time Job", user);
-        Expense expense = createExpense(1500.0, "Mortgage", user);
+        Income income = createIncome(2500.0, "Part-Time Job " + username, user);
+        Expense expense = createExpense(1500.0, "Mortgage " + username, user);
         user.setIncome(Arrays.asList(income));
         user.setExpense(Arrays.asList(expense));
         userRepo.save(user);
