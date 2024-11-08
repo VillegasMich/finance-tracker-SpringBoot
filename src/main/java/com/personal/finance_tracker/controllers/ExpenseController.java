@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.finance_tracker.models.Expense;
-import com.personal.finance_tracker.services.ExpenseService;
+import com.personal.finance_tracker.services.ExpenseServiceInterface;
 
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {
 
-  private final ExpenseService expenseService;
+  private final ExpenseServiceInterface expenseService;
 
-  public ExpenseController(ExpenseService expenseService) {
+  public ExpenseController(ExpenseServiceInterface expenseService) {
     this.expenseService = expenseService;
   }
 

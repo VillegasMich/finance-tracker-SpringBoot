@@ -5,16 +5,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.personal.finance_tracker.models.User;
-import com.personal.finance_tracker.services.UserService;
+import com.personal.finance_tracker.services.UserServiceInterface;
 import com.personal.finance_tracker.dto.LoginRequest;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-  private final UserService userService;
+  private final UserServiceInterface userService;
 
-  public UserController(UserService userService) {
+  public UserController(UserServiceInterface userService) {
     this.userService = userService;
   }
 

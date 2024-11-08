@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.finance_tracker.models.Income;
-import com.personal.finance_tracker.services.IncomeService;
+import com.personal.finance_tracker.services.IncomeServiceInterface;
 
 @RestController
 @RequestMapping("/api/incomes")
 public class IncomeController {
 
-  private final IncomeService incomeService;
+  private final IncomeServiceInterface incomeService;
 
-  public IncomeController(IncomeService incomeService) {
+  public IncomeController(IncomeServiceInterface incomeService) {
     this.incomeService = incomeService;
   }
 

@@ -8,7 +8,7 @@ import com.personal.finance_tracker.models.Expense;
 import com.personal.finance_tracker.repositories.ExpenseRepo;
 
 @Service
-public class ExpenseService {
+public class ExpenseService implements ExpenseServiceInterface {
 
   private final ExpenseRepo expenseRepo;
 

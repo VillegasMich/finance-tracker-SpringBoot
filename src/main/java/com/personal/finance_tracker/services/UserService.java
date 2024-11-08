@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
 
   private final UserRepo userRepository;
   private final PasswordEncoder passwordEncoder;

@@ -8,7 +8,7 @@ import com.personal.finance_tracker.models.Income;
 import com.personal.finance_tracker.repositories.IncomeRepo;
 
 @Service
-public class IncomeService {
+public class IncomeService implements IncomeServiceInterface {
 
   private final IncomeRepo IncomeRepo;
 
