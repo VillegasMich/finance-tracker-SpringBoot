@@ -57,6 +57,30 @@ public class ExpenseController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/total")
+  public ResponseEntity<String> getTotalExpense(@PathVariable Long id) {
+    return expenseService.getTotalExpense(id)
+        .map(total -> ResponseEntity.status(HttpStatus.OK).body("Your total expense is: " + total + " $"))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/date-new")
+  public ResponseEntity<List<Expense>> getNewExpensesByUserId(@PathVariable Long id) {
+    return expenseService.getNewExpensesByUserId(id)
+        .map(expenses -> ResponseEntity.ok(expenses))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/date-old")
+  public ResponseEntity<List<Expense>> getOldExpensesByUserId(@PathVariable Long id) {
+    return expenseService.getOldExpensesByUserId(id)
+        .map(expenses -> ResponseEntity.ok(expenses))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
     if (expenseService.deleteExpense(id)) {

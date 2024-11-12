@@ -56,6 +56,30 @@ public class IncomeController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/total")
+  public ResponseEntity<String> getTotalIncome(@PathVariable Long id) {
+    return incomeService.getTotalIncome(id)
+        .map(total -> ResponseEntity.status(HttpStatus.OK).body("Your total income is: " + total + " $"))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/date-new")
+  public ResponseEntity<List<Income>> getNewIncomesByUserId(@PathVariable Long id) {
+    return incomeService.getNewIncomesByUserId(id)
+        .map(incomes -> ResponseEntity.ok(incomes))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  // TODO: Change route mapping?
+  @GetMapping("/user/{id}/date-old")
+  public ResponseEntity<List<Income>> getOldIncomesByUserId(@PathVariable Long id) {
+    return incomeService.getOldIncomesByUserId(id)
+        .map(incomes -> ResponseEntity.ok(incomes))
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteIncome(@PathVariable Long id) {
     if (incomeService.deleteIncome(id)) {

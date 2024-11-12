@@ -15,4 +15,10 @@ public interface IncomeServiceInterface {
   boolean deleteIncome(Long id);
 
   Optional<Income> findById(Long id);
+
+  Optional<Double> getTotalIncome(Long id);
+
+  Optional<List<Income>> getNewIncomesByUserId(Long id);
+
+  Optional<List<Income>> getOldIncomesByUserId(Long id);
 }

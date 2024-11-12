@@ -1,7 +1,9 @@
 package com.personal.finance_tracker.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -20,14 +22,17 @@ public class IncomeService implements IncomeServiceInterface {
     this.userService = userService;
   }
 
+  @Override
   public List<Income> getAllIncomes() {
     return IncomeRepo.findAll();
   }
 
+  @Override
   public Optional<Income> findById(Long id) {
     return IncomeRepo.findById(id);
   }
 
+  @Override
   public Optional<List<Income>> getIncomesByUserId(Long id) {
     Optional<User> user = userService.findById(id);
     if (user.isPresent()) {
@@ -37,6 +42,48 @@ public class IncomeService implements IncomeServiceInterface {
     }
   }
 
+  @Override
+  public Optional<Double> getTotalIncome(Long id) {
+    Optional<User> user = userService.findById(id);
+    if (user.isPresent()) {
+      double total = 0.0;
+      if (user.get().getIncome() != null) {
+        List<Income> incomes = user.get().getIncome();
+        for (Income income : incomes) {
+          total += income.getAmount();
+        }
+      }
+      return Optional.of(total);
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<List<Income>> getNewIncomesByUserId(Long id) {
+    Optional<User> user = userService.findById(id);
+    if (user.isPresent()) {
+      List<Income> incomes = user.get().getIncome().stream()
+          .sorted(Comparator.comparing(Income::getCreatedAt).reversed()).collect(Collectors.toList());
+      return Optional.ofNullable(incomes);
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<List<Income>> getOldIncomesByUserId(Long id) {
+    Optional<User> user = userService.findById(id);
+    if (user.isPresent()) {
+      List<Income> incomes = user.get().getIncome().stream()
+          .sorted(Comparator.comparing(Income::getCreatedAt)).collect(Collectors.toList());
+      return Optional.ofNullable(incomes);
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
   public Income registerIncome(Income income, Long user_id) throws IllegalArgumentException {
     Optional<User> user = userService.findById(user_id);
     if (user.isPresent()) {
@@ -47,6 +94,7 @@ public class IncomeService implements IncomeServiceInterface {
     }
   }
 
+  @Override
   public boolean deleteIncome(Long id) {
     Optional<Income> income = IncomeRepo.findById(id);
     if (income.isPresent()) {

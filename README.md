@@ -50,13 +50,15 @@ mvn spring-boot:run
 - `/api/users/get-all`: Get all users
 - `/api/users/username/{username}`: Get user by username
 - `/api/users/{id}`: Get user by id
-- `api/users/total/{id}`: Get user total money
+- `api/users/total/{id}`: Get user total balance
 - `/api/incomes/get-all`: Get all incomes _(for production)_
 - `/api/incomes/{id}`: Get income by id
 - `/api/expenses/{id}`: Get expense by id
 - `/api/incomes/user/{id}`: Get all incomes from a given user
 - `/api/expenses/user/{id}`: Get all expenses from a given user
 - `/api/expenses/get-all`: Get all expenses _(for production)_
+- `/api/incomes/user/{id}/total`: Get total income from a given user
+- `/api/expenses/user/{id}/total`: Get total expense from a given user
 
 ### Post
 
@@ -101,9 +103,11 @@ mvn spring-boot:run
 - [x] Get user by username
 - [x] Update user by id
 - [x] Get user by credentials
-- [x] Get user total money
+- [x] Get user total balance
 - [x] Get all expenses from user
 - [x] Get all incomes from user
+- [x] Get total income from user
+- [x] Get total expense from user
 - [ ] Update income from user
 - [ ] Update expense from user
 - [ ] Get all expenses from user by date (up / down)

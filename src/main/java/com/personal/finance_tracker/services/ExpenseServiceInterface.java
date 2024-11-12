@@ -16,4 +16,10 @@ public interface ExpenseServiceInterface {
 
   Expense registerExpense(Expense expense, Long user_id);
 
+  Optional<Double> getTotalExpense(Long id);
+
+  Optional<List<Expense>> getNewExpensesByUserId(Long id);
+
+  Optional<List<Expense>> getOldExpensesByUserId(Long id);
+
 }
