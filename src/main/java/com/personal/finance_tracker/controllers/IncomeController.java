@@ -36,6 +36,11 @@ public class IncomeController {
     }
   }
 
+  @GetMapping("")
+  public ResponseEntity<List<Income>> getAllIncomes() {
+    return ResponseEntity.ok(incomeService.getAllIncomes());
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<Income> getIncomeById(@PathVariable Long id) {
     return incomeService.findById(id)
@@ -43,12 +48,6 @@ public class IncomeController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  @GetMapping("/get-all")
-  public ResponseEntity<List<Income>> getAllIncomes() {
-    return ResponseEntity.ok(incomeService.getAllIncomes());
-  }
-
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}")
   public ResponseEntity<List<Income>> getIncomesByUserId(@PathVariable Long id) {
     return incomeService.getIncomesByUserId(id)
@@ -56,7 +55,6 @@ public class IncomeController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/total")
   public ResponseEntity<String> getTotalIncome(@PathVariable Long id) {
     return incomeService.getTotalIncome(id)
@@ -64,7 +62,6 @@ public class IncomeController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/date-new")
   public ResponseEntity<List<Income>> getNewIncomesByUserId(@PathVariable Long id) {
     return incomeService.getNewIncomesByUserId(id)
@@ -72,7 +69,6 @@ public class IncomeController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/date-old")
   public ResponseEntity<List<Income>> getOldIncomesByUserId(@PathVariable Long id) {
     return incomeService.getOldIncomesByUserId(id)

@@ -82,4 +82,10 @@ public class Expense {
     this.category = category;
   }
 
+  @Override
+  public String toString() {
+    return "Expense [id=" + id + ", description=" + description + ", amount=" + amount + ", createdAt=" + createdAt
+        + ", category=" + category + ", user=" + user + "]";
+  }
+
 }

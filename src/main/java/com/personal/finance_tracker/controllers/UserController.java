@@ -35,6 +35,11 @@ public class UserController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
+  @GetMapping("")
+  public ResponseEntity<Iterable<User>> getAllUsers() {
+    return ResponseEntity.ok(userService.getAllUsers());
+  }
+
   @GetMapping("/total/{id}")
   public ResponseEntity<String> getTotal(@PathVariable Long id) {
     return userService.getTotal(id)
@@ -54,11 +59,6 @@ public class UserController {
     return userService.findByUsername(username)
         .map(user -> ResponseEntity.ok(user))
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-  }
-
-  @GetMapping("/get-all")
-  public ResponseEntity<Iterable<User>> getAllUsers() {
-    return ResponseEntity.ok(userService.getAllUsers());
   }
 
   @DeleteMapping("/delete/{id}")

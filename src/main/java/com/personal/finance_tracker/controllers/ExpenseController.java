@@ -36,6 +36,12 @@ public class ExpenseController {
     }
   }
 
+  @GetMapping("")
+  public ResponseEntity<Iterable<Expense>> getAllExpenses() {
+    return ResponseEntity.ok(expenseService.getAllExpenses());
+
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
     return expenseService.findById(id)
@@ -43,13 +49,6 @@ public class ExpenseController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  @GetMapping("/get-all")
-  public ResponseEntity<Iterable<Expense>> getAllExpenses() {
-    return ResponseEntity.ok(expenseService.getAllExpenses());
-
-  }
-
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}")
   public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable Long id) {
     return expenseService.getExpensesByUserId(id)
@@ -57,7 +56,6 @@ public class ExpenseController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/total")
   public ResponseEntity<String> getTotalExpense(@PathVariable Long id) {
     return expenseService.getTotalExpense(id)
@@ -65,7 +63,6 @@ public class ExpenseController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/date-new")
   public ResponseEntity<List<Expense>> getNewExpensesByUserId(@PathVariable Long id) {
     return expenseService.getNewExpensesByUserId(id)
@@ -73,7 +70,6 @@ public class ExpenseController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
-  // TODO: Change route mapping?
   @GetMapping("/user/{id}/date-old")
   public ResponseEntity<List<Expense>> getOldExpensesByUserId(@PathVariable Long id) {
     return expenseService.getOldExpensesByUserId(id)

@@ -13,14 +13,25 @@ git clone https://github.com/VillegasMich/finance-tracker-SpringBoot.git
 cd finance-tracker-SpringBoot
 ```
 
-### 2. Update the application.properties file
+### 2. Update the application.properties file and the .env file
 
-Update the `application.properties` file with your database connection details:
+Check the `application.properties` file with your database connection details:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/finance_tracker
-spring.datasource.username=postgres
-spring.datasource.password=password
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
+```
+
+And the `.env` file with your OpenAI API key and model:
+
+```env
+DATABASE_URL=jdbc:postgresql://localhost:5432/finance_tracker
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=password
+OPENAI_API_KEY=your_api_key
+OPENAI_MODEL=gpt-3.5-turbo
+OPENAI_URL=https://api.openai.com/v1/chat/completions
 ```
 
 ### 3. Run the Application
@@ -59,13 +70,17 @@ mvn spring-boot:run
 - `/api/expenses/get-all`: Get all expenses _(for production)_
 - `/api/incomes/user/{id}/total`: Get total income from a given user
 - `/api/expenses/user/{id}/total`: Get total expense from a given user
+- `/api/incomes/user/{id}/date-new`: Get all incomes from a given user by date (up / down)
+- `/api/expenses/user/{id}/date-new`: Get all expenses from a given user by date (up / down)
+- `/api/incomes/user/{id}/date-old`: Get all incomes from a given user by date (down / up)
+- `/api/expenses/user/{id}/date-old`: Get all expenses from a given user by date (down / up)
 
 ### Post
 
 - `/api/users/register`: Register a user
 - `/api/users/find-by-credentials`: Find user by username or email and password
-- `/api/incomes/register/{user_id}`: Register an income to a given user
-- `/api/expenses/register/{user_id}`: Register an expense to a given user
+- `/api/incomes/register/{user_id}`: Register an income to a given user **PASAR UDER ID EN EL BODY**
+- `/api/expenses/register/{user_id}`: Register an expense to a given user **PASAR UDER ID EN EL BODY**
 
 ### Delete
 
@@ -110,8 +125,10 @@ mvn spring-boot:run
 - [x] Get total expense from user
 - [ ] Update income from user
 - [ ] Update expense from user
-- [ ] Get all expenses from user by date (up / down)
-- [ ] Get all incomes from user by date (up / down)
+- [x] Get all expenses from user by date (up / down)
+- [x] Get all expenses from user by date (down / up)
+- [x] Get all incomes from user by date (up / down)
+- [x] Get all incomes from user by date (down / up)
 - [ ] Get greater expense from user
 - [ ] Get greater income from user
 - [ ] Get less expense from user
