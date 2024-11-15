@@ -2,7 +2,7 @@ package com.personal.finance_tracker.infra.dto;
 
 import java.time.LocalDateTime;
 
-public class ResponseIncomeDTO {
+public class ResponseIncomeDTO implements ApiResponse {
   private Long id;
   private Long userId;
   private Double amount;

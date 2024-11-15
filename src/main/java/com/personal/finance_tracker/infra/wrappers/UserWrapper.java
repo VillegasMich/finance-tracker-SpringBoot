@@ -17,8 +17,12 @@ public class UserWrapper {
   }
 
   public static UserEntity fromModelToEntity(UserModel userModel) {
-    return new UserEntity(userModel.getUsername(), userModel.getEmail(), userModel.getPassword(),
+    UserEntity userEntity = new UserEntity(userModel.getUsername(), userModel.getEmail(), userModel.getPassword(),
         userModel.getCreatedAt());
+    if (userModel.getId() != null) {
+      userEntity.setId(userModel.getId());
+    }
+    return userEntity;
   }
 
   public static UserModel fromEntityToModel(UserEntity userEntity) {

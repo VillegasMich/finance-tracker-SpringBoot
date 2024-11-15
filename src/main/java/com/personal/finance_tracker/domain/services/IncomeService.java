@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.personal.finance_tracker.domain.models.IncomeModel;
 import com.personal.finance_tracker.domain.models.UserModel;
 import com.personal.finance_tracker.infra.entidades.IncomeEntity;
+import com.personal.finance_tracker.infra.entidades.UserEntity;
 import com.personal.finance_tracker.infra.repositories.IncomeRepo;
+import com.personal.finance_tracker.infra.wrappers.IncomeWrapper;
 import com.personal.finance_tracker.infra.wrappers.UserWrapper;
 
 @Service
@@ -25,13 +27,14 @@ public class IncomeService implements IncomeServiceInterface {
   }
 
   @Override
-  public List<IncomeEntity> getAllIncomes() {
-    return IncomeRepo.findAll();
+  public List<IncomeModel> getAllIncomes() {
+    List<IncomeModel> incomes = IncomeRepo.findAll().stream().map(IncomeWrapper::fromEntityToModel).toList();
+    return incomes;
   }
 
   @Override
-  public Optional<IncomeEntity> findById(Long id) {
-    return IncomeRepo.findById(id);
+  public Optional<IncomeModel> findById(Long id) {
+    return IncomeRepo.findById(id).map(IncomeWrapper::fromEntityToModel);
   }
 
   @Override
@@ -86,11 +89,14 @@ public class IncomeService implements IncomeServiceInterface {
   }
 
   @Override
-  public IncomeEntity registerIncome(IncomeEntity income, Long user_id) throws IllegalArgumentException {
+  public IncomeModel registerIncome(IncomeModel income, Long user_id) throws IllegalArgumentException {
     Optional<UserModel> user = userService.findById(user_id);
     if (user.isPresent()) {
-      income.setUser(UserWrapper.fromModelToEntity(user.get()));
-      return IncomeRepo.save(income);
+      IncomeEntity incomeEntity = IncomeWrapper.fromModelToEntity(income);
+      UserEntity userEntity = UserWrapper.fromModelToEntity(user.get());
+      incomeEntity.setUser(userEntity);
+      incomeEntity = IncomeRepo.save(incomeEntity);
+      return IncomeWrapper.fromEntityToModel(incomeEntity);
     } else {
       throw new IllegalArgumentException("User not found with id " + user_id);
     }

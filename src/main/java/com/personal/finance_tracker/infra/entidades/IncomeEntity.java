@@ -29,6 +29,17 @@ public class IncomeEntity {
   @JsonBackReference
   private UserEntity user;
 
+  public IncomeEntity() {
+  }
+
+  public IncomeEntity(String description, Double amount, LocalDateTime createdAt, String category, UserEntity user) {
+    this.description = description;
+    this.amount = amount;
+    this.createdAt = createdAt;
+    this.category = category;
+    this.user = user;
+  }
+
   @PrePersist
   protected void onCreate() {
     this.createdAt = LocalDateTime.now();
