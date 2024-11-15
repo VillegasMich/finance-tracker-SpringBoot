@@ -4,18 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import com.personal.finance_tracker.domain.models.ExpenseModel;
-import com.personal.finance_tracker.infra.entidades.ExpenseEntity;
 
 public interface ExpenseServiceInterface {
-  List<ExpenseEntity> getAllExpenses();
+  List<ExpenseModel> getAllExpenses();
 
   Optional<List<ExpenseModel>> getExpensesByUserId(Long id);
 
   boolean deleteExpense(Long id);
 
-  Optional<ExpenseEntity> findById(Long id);
+  Optional<ExpenseModel> findById(Long id);
 
-  ExpenseEntity registerExpense(ExpenseEntity expense, Long user_id);
+  ExpenseModel registerExpense(ExpenseModel expense, Long user_id);
 
   Optional<Double> getTotalExpense(Long id);
 

@@ -34,6 +34,17 @@ public class ExpenseEntity {
     this.createdAt = LocalDateTime.now();
   }
 
+  public ExpenseEntity() {
+  }
+
+  public ExpenseEntity(String description, Double amount, LocalDateTime createdAt, String category, UserEntity user) {
+    this.description = description;
+    this.amount = amount;
+    this.createdAt = createdAt;
+    this.category = category;
+    this.user = user;
+  }
+
   public UserEntity getUser() {
     return user;
   }

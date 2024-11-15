@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.personal.finance_tracker.domain.models.ExpenseModel;
 import com.personal.finance_tracker.domain.models.UserModel;
+import com.personal.finance_tracker.infra.dto.RegisterExpenseDTO;
 import com.personal.finance_tracker.infra.entidades.ExpenseEntity;
+import com.personal.finance_tracker.infra.entidades.UserEntity;
 import com.personal.finance_tracker.infra.repositories.ExpenseRepo;
+import com.personal.finance_tracker.infra.wrappers.ExpenseWrapper;
 import com.personal.finance_tracker.infra.wrappers.UserWrapper;
 
 @Service
@@ -36,8 +39,8 @@ public class ExpenseService implements ExpenseServiceInterface {
   }
 
   @Override
-  public Optional<ExpenseEntity> findById(Long id) {
-    return expenseRepo.findById(id);
+  public Optional<ExpenseModel> findById(Long id) {
+    return expenseRepo.findById(id).map(ExpenseWrapper::fromEntityToModel);
   }
 
   @Override
@@ -92,17 +95,20 @@ public class ExpenseService implements ExpenseServiceInterface {
   }
 
   @Override
-  public ExpenseEntity registerExpense(ExpenseEntity expense, Long user_id) throws IllegalArgumentException {
+  public ExpenseModel registerExpense(ExpenseModel expense, Long user_id) throws IllegalArgumentException {
     Optional<UserModel> user = userService.findById(user_id);
     if (user.isPresent()) {
-      expense.setUser(UserWrapper.fromModelToEntity(user.get()));
-      return expenseRepo.save(expense);
+      ExpenseEntity expenseEntity = ExpenseWrapper.fromModelToEntity(expense);
+      UserEntity userEntity = UserWrapper.fromModelToEntity(user.get());
+      expenseEntity.setUser(userEntity);
+      expenseEntity = expenseRepo.save(expenseEntity);
+      return ExpenseWrapper.fromEntityToModel(expenseEntity);
     } else {
       throw new IllegalArgumentException("User not found with id " + user_id);
     }
   }
 
-  public List<ExpenseEntity> getAllExpenses() {
-    return expenseRepo.findAll();
+  public List<ExpenseModel> getAllExpenses() {
+    return expenseRepo.findAll().stream().map(ExpenseWrapper::fromEntityToModel).collect(Collectors.toList());
   }
 }

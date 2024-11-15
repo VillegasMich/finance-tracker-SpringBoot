@@ -37,7 +37,7 @@ public class IncomeController {
   @PostMapping("/register")
   public ResponseEntity<ApiResponse> registerIncome(@RequestBody RegisterIncomeDTO income) {
     try {
-      incomeErrorHandler.validateRegisterUserDTO(income);
+      incomeErrorHandler.validateRegisterDTO(income);
       Long userId = income.getUserId();
       IncomeModel incomeModel = incomeService.registerIncome(IncomeWrapper.fromRegisterDTOToModel(income), userId);
       ResponseIncomeDTO responseIncomeDTO = IncomeWrapper.fromModelToResponseDTO(incomeModel);
