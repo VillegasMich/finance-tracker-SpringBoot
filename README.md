@@ -29,9 +29,6 @@ And the `.env` file with your OpenAI API key and model:
 DATABASE_URL=jdbc:postgresql://localhost:5432/finance_tracker
 DATABASE_USERNAME=root
 DATABASE_PASSWORD=password
-OPENAI_API_KEY=your_api_key
-OPENAI_MODEL=gpt-3.5-turbo
-OPENAI_URL=https://api.openai.com/v1/chat/completions
 ```
 
 ### 3. Run the Application
@@ -50,6 +47,10 @@ Run the backend using Maven:
 mvn spring-boot:run
 ```
 
+### 5. Check the API documentation ui
+
+Check the API documentation ui at http://localhost:8080/swagger-ui/index.html
+
 ## Database Schema
 
 ![finance-tracker-shema](https://github.com/user-attachments/assets/78d6ab25-2e65-4e51-8796-13c0539e6545)
@@ -58,16 +59,16 @@ mvn spring-boot:run
 
 ### Get
 
-- `/api/users/get-all`: Get all users
+- `/api/users`: Get all users
 - `/api/users/username/{username}`: Get user by username
-- `/api/users/{id}`: Get user by id
+- `/api/users/id/{id}`: Get user by id
 - `api/users/total/{id}`: Get user total balance
-- `/api/incomes/get-all`: Get all incomes _(for production)_
-- `/api/incomes/{id}`: Get income by id
-- `/api/expenses/{id}`: Get expense by id
+- `/api/incomes`: Get all incomes _(for production)_
+- `/api/incomes/id/{id}`: Get income by id
+- `/api/expenses/id/{id}`: Get expense by id
 - `/api/incomes/user/{id}`: Get all incomes from a given user
 - `/api/expenses/user/{id}`: Get all expenses from a given user
-- `/api/expenses/get-all`: Get all expenses _(for production)_
+- `/api/expenses`: Get all expenses _(for production)_
 - `/api/incomes/user/{id}/total`: Get total income from a given user
 - `/api/expenses/user/{id}/total`: Get total expense from a given user
 - `/api/incomes/user/{id}/date-new`: Get all incomes from a given user by date (up / down)
@@ -78,9 +79,8 @@ mvn spring-boot:run
 ### Post
 
 - `/api/users/register`: Register a user
-- `/api/users/find-by-credentials`: Find user by username or email and password
-- `/api/incomes/register/{user_id}`: Register an income to a given user **PASAR UDER ID EN EL BODY**
-- `/api/expenses/register/{user_id}`: Register an expense to a given user **PASAR UDER ID EN EL BODY**
+- `/api/incomes/register`: Register an income to a given user
+- `/api/expenses/register`: Register an expense to a given user
 
 ### Delete
 
