@@ -6,12 +6,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.personal.finance_tracker.models.Expense;
-import com.personal.finance_tracker.models.Income;
-import com.personal.finance_tracker.models.User;
-import com.personal.finance_tracker.repositories.ExpenseRepo;
-import com.personal.finance_tracker.repositories.IncomeRepo;
-import com.personal.finance_tracker.repositories.UserRepo;
+import com.personal.finance_tracker.infra.entidades.ExpenseEntity;
+import com.personal.finance_tracker.infra.entidades.IncomeEntity;
+import com.personal.finance_tracker.infra.entidades.UserEntity;
+import com.personal.finance_tracker.infra.repositories.ExpenseRepo;
+import com.personal.finance_tracker.infra.repositories.IncomeRepo;
+import com.personal.finance_tracker.infra.repositories.UserRepo;
 
 import java.util.Arrays;
 
@@ -45,9 +45,9 @@ public class SeedDataRunner implements CommandLineRunner {
         String username = "user" + i;
         String email = username + "@example.com";
         String password = "password";
-        User user = createUser(username, email, password);
-        Income income = createIncome(2500.0, "Part-Time Job " + username, user);
-        Expense expense = createExpense(1500.0, "Mortgage " + username, user);
+        UserEntity user = createUser(username, email, password);
+        IncomeEntity income = createIncome(2500.0, "Part-Time Job " + username, user);
+        ExpenseEntity expense = createExpense(1500.0, "Mortgage " + username, user);
         user.setIncome(Arrays.asList(income));
         user.setExpense(Arrays.asList(expense));
         userRepo.save(user);
@@ -61,24 +61,24 @@ public class SeedDataRunner implements CommandLineRunner {
   }
 
   // Helper methods to create user, income, and expense
-  private User createUser(String username, String email, String password) {
-    User user = new User();
+  private UserEntity createUser(String username, String email, String password) {
+    UserEntity user = new UserEntity();
     user.setUsername(username);
     user.setEmail(email);
     user.setPassword(passwordEncoder.encode(password));
     return user;
   }
 
-  private Income createIncome(Double amount, String description, User user) {
-    Income income = new Income();
+  private IncomeEntity createIncome(Double amount, String description, UserEntity user) {
+    IncomeEntity income = new IncomeEntity();
     income.setAmount(amount);
     income.setDescription(description);
     income.setUser(user);
     return income;
   }
 
-  private Expense createExpense(Double amount, String description, User user) {
-    Expense expense = new Expense();
+  private ExpenseEntity createExpense(Double amount, String description, UserEntity user) {
+    ExpenseEntity expense = new ExpenseEntity();
     expense.setAmount(amount);
     expense.setDescription(description);
     expense.setUser(user);
