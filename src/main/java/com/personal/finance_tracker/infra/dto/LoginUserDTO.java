@@ -1,6 +1,6 @@
 package com.personal.finance_tracker.infra.dto;
 
-public class LoginRequest {
+public class LoginUserDTO {
   private String usernameOrEmail;
   private String password;
 

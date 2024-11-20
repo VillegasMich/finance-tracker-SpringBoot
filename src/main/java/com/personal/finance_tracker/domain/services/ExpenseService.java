@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.personal.finance_tracker.domain.models.ExpenseModel;
 import com.personal.finance_tracker.domain.models.UserModel;
-import com.personal.finance_tracker.infra.dto.RegisterExpenseDTO;
 import com.personal.finance_tracker.infra.entidades.ExpenseEntity;
 import com.personal.finance_tracker.infra.entidades.UserEntity;
 import com.personal.finance_tracker.infra.repositories.ExpenseRepo;

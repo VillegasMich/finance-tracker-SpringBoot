@@ -49,7 +49,7 @@ mvn spring-boot:run
 
 ### 5. Check the API documentation ui
 
-Check the API documentation ui at http://localhost:8080/swagger-ui/index.html
+Check the API documentation ui at http://localhost:8080/swagger-ui/index.html when the server is running
 
 ## Database Schema
 
@@ -103,6 +103,7 @@ Check the API documentation ui at http://localhost:8080/swagger-ui/index.html
 - `org.testcontainers:postgresql`
 - `com.h2database:h2`
 - `org.springframework.boot:spring-boot-starter-data-jpa`
+- `springdoc-openapi-starter-webmvc-ui`
 
 ## Requirements
 

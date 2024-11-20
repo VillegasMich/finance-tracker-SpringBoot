@@ -7,7 +7,9 @@ import com.personal.finance_tracker.domain.models.UserModel;
 import java.util.List;
 
 public interface UserServiceInterface {
-  public UserModel registerUser(UserModel user);
+  public UserModel register(UserModel user);
+
+  public Optional<UserModel> login(UserModel user);
 
   public List<UserModel> getAllUsers();
 

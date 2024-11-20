@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.personal.finance_tracker.domain.models.UserModel;
+import com.personal.finance_tracker.infra.dto.LoginUserDTO;
 import com.personal.finance_tracker.infra.dto.RegisterUserDTO;
 import com.personal.finance_tracker.infra.entidades.UserEntity;
 import com.personal.finance_tracker.infra.repositories.UserRepo;
@@ -46,6 +47,15 @@ public class UserErrorHandler {
     Optional<UserEntity> user = userRepo.findByUsername(userModel.getUsername());
     if (user.isPresent()) {
       throw new IllegalArgumentException("Username already exists");
+    }
+  }
+
+  public void validateLoginUserRequest(LoginUserDTO loginUserRequest) {
+    if (loginUserRequest.getUsernameOrEmail() == null) {
+      throw new IllegalArgumentException("Username or email is required");
+    }
+    if (loginUserRequest.getPassword() == null) {
+      throw new IllegalArgumentException("Password is required");
     }
   }
 }

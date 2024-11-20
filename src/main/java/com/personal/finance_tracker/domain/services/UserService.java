@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.personal.finance_tracker.domain.models.ExpenseModel;
 import com.personal.finance_tracker.domain.models.IncomeModel;
 import com.personal.finance_tracker.domain.models.UserModel;
+import com.personal.finance_tracker.infra.dto.LoginUserDTO;
 import com.personal.finance_tracker.infra.entidades.UserEntity;
 import com.personal.finance_tracker.infra.handlers.UserErrorHandler;
 import com.personal.finance_tracker.infra.repositories.UserRepo;
@@ -27,12 +28,30 @@ public class UserService implements UserServiceInterface {
     this.userErrorHandler = userErrorHandler;
   }
 
-  public UserModel registerUser(UserModel user) {
+  public UserModel register(UserModel user) {
     userErrorHandler.validateUsernameAlreadyExists(user);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     UserEntity userEntity = userRepository.save(UserWrapper.fromModelToEntity(user));
     UserModel userModel = UserWrapper.fromEntityToModel(userEntity);
     return userModel;
+  }
+
+  public Optional<UserModel> login(UserModel user) {
+    Optional<UserEntity> userEntity = Optional.empty();
+    if (user.getUsername() != null) {
+      userEntity = userRepository.findByUsername(user.getUsername());
+    } else if (user.getEmail() != null) {
+      userEntity = userRepository.findByEmail(user.getEmail());
+    }
+    if (userEntity.isPresent()) {
+      if (passwordEncoder.matches(user.getPassword(), userEntity.get().getPassword())) {
+        return Optional.of(UserWrapper.fromEntityToModel(userEntity.get()));
+      } else {
+        return Optional.empty();
+      }
+    } else {
+      return Optional.empty();
+    }
   }
 
   public List<UserModel> getAllUsers() {
